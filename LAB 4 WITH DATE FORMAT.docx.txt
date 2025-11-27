@@ -1,0 +1,116 @@
+﻿MySQL Date & Time Formats – With Queries and Examples
+1. DAY Formats with Query & Example
+Format Codes:
+%W – Full weekday name (e.g., Monday)
+%a – Short weekday name (e.g., Mon)
+%w – Day number (0=Sunday)
+%d – Day of month (01–31)
+%e – Day of month (1–31)
+%D – Day with suffix (e.g., 7th)
+
+
+Example Query:
+SELECT 
+    DOB,
+    DATE_FORMAT(DOB, '%W') AS Full_Day,
+    DATE_FORMAT(DOB, '%a') AS Short_Day,
+    DATE_FORMAT(DOB, '%d') AS Day_2Digit,
+    DATE_FORMAT(DOB, '%D') AS Day_With_Suffix
+FROM Sales;
+2. MONTH Formats with Query & Example
+Format Codes:
+%M – Full month name (December)
+%b – Short month name (Dec)
+%m – Month number (12)
+
+
+Example Query:
+SELECT 
+    DOB,
+    DATE_FORMAT(DOB, '%M') AS Full_Month,
+    DATE_FORMAT(DOB, '%b') AS Short_Month,
+    DATE_FORMAT(DOB, '%m') AS Month_Number
+FROM Sales;
+3. YEAR Formats with Query & Example
+Format Codes:
+%Y – 4-digit year (1990)
+%y – 2-digit year (90)
+
+
+Example Query:
+SELECT 
+    DOB,
+    DATE_FORMAT(DOB, '%Y') AS Year4,
+    DATE_FORMAT(DOB, '%y') AS Year2
+FROM Sales;
+4. TIME Formats with Query & Example
+Format Codes:
+%H – Hour (24-hour)
+%h – Hour (12-hour)
+%i – Minutes
+%s – Seconds
+%p – AM/PM
+
+
+Example Query:
+SELECT 
+    LoginTime,
+    DATE_FORMAT(LoginTime, '%H:%i:%s') AS Time24,
+    DATE_FORMAT(LoginTime, '%h:%i:%s %p') AS Time12
+FROM EmployeeLog;
+
+
+Practical Example – December Birthdays
+Display Salesmen born in December with day name:
+SELECT SalesName,
+       DATE_FORMAT(DOB, '%W') AS DayName,
+       DOB
+FROM Sales
+WHERE MONTH(DOB) = 12;
+
+
+
+
+LAB PROGRAM
+4. Create Sales table with the following fields( Sales No, Sales name, Branch, Sales amount, DOB)
+1. Insert five records
+1. Calculate total Sales amount in each branch
+1. Calculate average Sales amount in each branch
+1. Display all the salesmen, DOB who are born in the month of December as day in character format.
+            Creating the table
+create table sales(sales_no int primary key,sales_name varchar(50),branch varchar(50),sales_amount decimal(10,2),dob date);
+
+
+  
+
+
+
+
+
+1. Inserting tuples 
+
+
+insert into sales values (1,'alice','New York',5000.00,'1990-12-15');
+       insert into sales values (2,'Bob','Las Vegas',3000.00,'1985-12-15');
+       insert into sales values (3,'Charlie','Chicago',7000.00,'1995-11-17');
+            insert into sales values (4,'David','New York',6000.00,'1995-03-17');
+            insert into sales values (5,'Tia','LA',4000.00,'2002-03-17');
+        
+2. select branch,sum(sales_amount) as total_sales_amount from sales group by branch;
+
+
+  
+
+
+
+
+
+3. select branch,avg(sales_amount) as average_sales_amount from sales group by branch;
+
+
+  
+
+
+
+
+4. select sales_name,  date_format(dob, '%w %d %m %y') as Birth_Day from sales where month(dob) = 12;
